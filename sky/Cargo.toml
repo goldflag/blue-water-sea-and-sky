@@ -1,0 +1,32 @@
+[package]
+name = "naval-sky"
+description = "The game's sky on wgpu: atmosphere LUTs, dome, sun, moon and stars, and the environment lighting ships and the sea read"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+# A portable crate: `bun run check` checks it for wasm32-unknown-unknown (native/AGENTS.md).
+# One test program for every file in tests/ (tests/all.rs).
+autotests = false
+[package.metadata.native]
+portable = true
+
+[dependencies]
+naval-sim.workspace = true
+wgpu = { workspace = true, features = ["naga-ir"] }
+naga_oil.workspace = true
+glam.workspace = true
+bytemuck.workspace = true
+# The sky as a renderer-core layer (`naval_sky::layer::SkyLayer`).
+naval-render.workspace = true
+
+[dev-dependencies]
+native-offscreen.workspace = true
+pollster.workspace = true
+image.workspace = true
+anyhow.workspace = true
+
+[[test]]
+name = "all"
+path = "tests/all.rs"

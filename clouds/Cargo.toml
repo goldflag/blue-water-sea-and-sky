@@ -1,0 +1,36 @@
+[package]
+name = "naval-clouds"
+description = "The game's clouds and weather on wgpu: takram's volumetric clouds (Beer shadow maps, temporal upscaling, light shafts, haze), cloud shadows, rain and lightning"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+# A portable crate: `bun run check` checks it for wasm32-unknown-unknown (native/AGENTS.md).
+# One test program for every file in tests/ (tests/all.rs).
+autotests = false
+[package.metadata.native]
+portable = true
+
+[dependencies]
+naval-sim.workspace = true
+# The render packet's cloud field (`CloudRender`).
+naval-protocol.workspace = true
+wgpu = { workspace = true, features = ["naga-ir"] }
+naga_oil.workspace = true
+glam.workspace = true
+bytemuck.workspace = true
+# The embedded cloud textures are PNGs.
+image.workspace = true
+naval-sky.workspace = true
+naval-render.workspace = true
+
+[dev-dependencies]
+native-offscreen.workspace = true
+pollster.workspace = true
+anyhow.workspace = true
+serde_json.workspace = true
+
+[[test]]
+name = "all"
+path = "tests/all.rs"

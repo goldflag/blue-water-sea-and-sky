@@ -1,0 +1,36 @@
+[package]
+name = "naval-ocean"
+description = "The game's ocean surface on wgpu: spectrum, GPU FFT cascades, foam, clipmap surface and its shading, ported from src/game/ocean"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+# A portable crate: `bun run check` checks it for wasm32-unknown-unknown (native/AGENTS.md).
+# One test program for every file in tests/ (tests/all.rs).
+autotests = false
+[package.metadata.native]
+portable = true
+
+[dependencies]
+# naga-ir: the shaders are composed with naga_oil and handed to wgpu as naga modules.
+wgpu = { workspace = true, features = ["naga-ir"] }
+naga_oil.workspace = true
+glam.workspace = true
+bytemuck.workspace = true
+half.workspace = true
+# The renderer core: the ocean is a SceneLayer and reads its camera at group 0.
+naval-render.workspace = true
+# The clouds' shadow module (`naval_clouds::shadow`), which the surface multiplies into the sun.
+naval-clouds = { path = "../naval-clouds" }
+
+[dev-dependencies]
+native-offscreen.workspace = true
+pollster.workspace = true
+image.workspace = true
+anyhow.workspace = true
+serde_json.workspace = true
+
+[[test]]
+name = "all"
+path = "tests/all.rs"
